@@ -1,0 +1,15 @@
+# Configuration de la base de donnees - EXEMPLE
+# Copiez ce fichier vers database.properties et remplissez avec vos propres credentials
+
+# Type de base de donnees
+db.type=postgresql
+
+# Informations de connexion Neon
+db.url=jdbc:postgresql://VOTRE-HOST.neon.tech/VOTRE-DATABASE?sslmode=require
+db.username=VOTRE_USERNAME
+db.password=VOTRE_PASSWORD
+db.driver=org.postgresql.Driver
+
+# Parametres de connexion
+db.ssl=true
+db.ssl.mode=require

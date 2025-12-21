@@ -1,0 +1,32 @@
+# Fichiers de build
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Fichiers Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configuration sensible (contient des credentials)
+src/main/resources/database.properties
+
+# Spring Boot
+.springBeans
