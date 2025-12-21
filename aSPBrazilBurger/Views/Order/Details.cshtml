@@ -1,0 +1,220 @@
+@model aSPBrazilBurger.Models.ViewModels.OrderTrackingViewModel
+@{
+    ViewData["Title"] = $"Commande #{Model.CommandeId}";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="MyOrders">Mes commandes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Commande #@Model.CommandeId</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Informations principales -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Commande #@Model.CommandeId</h4>
+                    @{
+                        var badgeClass = Model.Etat switch
+                        {
+                            aSPBrazilBurger.Models.Enums.EtatCommande.EnAttente => "bg-warning",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.Validee => "bg-info",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.EnPreparation => "bg-primary",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.Pret => "bg-success",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.EnLivraison => "bg-dark",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.Terminee => "bg-success",
+                            aSPBrazilBurger.Models.Enums.EtatCommande.Annulee => "bg-danger",
+                            _ => "bg-secondary"
+                        };
+                    }
+                    <span class="badge @badgeClass fs-6">@Model.Etat</span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Date de commande :</strong></div>
+                        <div class="col-sm-8">@Model.DateCommande.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Type :</strong></div>
+                        <div class="col-sm-8">
+                            @if (Model.TypeConsommation == aSPBrazilBurger.Models.Enums.TypeConsommation.SurPlace)
+                            {
+                                <span class="badge bg-info"><i class="bi bi-shop"></i> Sur place</span>
+                            }
+                            else if (Model.TypeConsommation == aSPBrazilBurger.Models.Enums.TypeConsommation.AEmporter)
+                            {
+                                <span class="badge bg-warning"><i class="bi bi-bag"></i> À emporter</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-dark"><i class="bi bi-truck"></i> Livraison</span>
+                            }
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.AdresseLivraison))
+                    {
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Adresse de livraison :</strong></div>
+                            <div class="col-sm-8">@Model.AdresseLivraison</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Articles -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-box"></i> Articles commandés</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-end">Prix unitaire</th>
+                                <th class="text-end">Sous-total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ligne in Model.Lignes)
+                            {
+                                <tr>
+                                    <td><strong>@ligne.NomProduit</strong></td>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">@ligne.Quantite</span>
+                                    </td>
+                                    <td class="text-end">@ligne.PrixUnitaire.ToString("N0") FCFA</td>
+                                    <td class="text-end"><strong>@ligne.SousTotal.ToString("N0") FCFA</strong></td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-success">
+                                <td colspan="3" class="text-end"><strong>TOTAL</strong></td>
+                                <td class="text-end"><strong class="fs-5 text-success">@Model.MontantTotal.ToString("N0") FCFA</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Paiements -->
+            @if (Model.Paiements.Any())
+            {
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-credit-card"></i> Paiements</h5>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var paiement in Model.Paiements)
+                        {
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>@paiement.Methode</strong>
+                                    <br/>
+                                    <small class="text-muted">@paiement.DatePaiement.ToString("dd/MM/yyyy HH:mm")</small>
+                                </div>
+                                <span class="badge bg-success fs-6">@paiement.Montant.ToString("N0") FCFA</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="d-grid gap-2">
+                <a asp-action="MyOrders" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Retour à mes commandes
+                </a>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Suivi de commande</h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item @(Model.Etat >= aSPBrazilBurger.Models.Enums.EtatCommande.EnAttente ? "active" : "")">
+                            <i class="bi bi-circle-fill"></i>
+                            <span>En attente</span>
+                        </div>
+                        <div class="timeline-item @(Model.Etat >= aSPBrazilBurger.Models.Enums.EtatCommande.Validee ? "active" : "")">
+                            <i class="bi bi-circle-fill"></i>
+                            <span>Validée</span>
+                        </div>
+                        <div class="timeline-item @(Model.Etat >= aSPBrazilBurger.Models.Enums.EtatCommande.EnPreparation ? "active" : "")">
+                            <i class="bi bi-circle-fill"></i>
+                            <span>En préparation</span>
+                        </div>
+                        <div class="timeline-item @(Model.Etat >= aSPBrazilBurger.Models.Enums.EtatCommande.Pret ? "active" : "")">
+                            <i class="bi bi-circle-fill"></i>
+                            <span>Prêt</span>
+                        </div>
+                        @if (Model.TypeConsommation == aSPBrazilBurger.Models.Enums.TypeConsommation.Livraison)
+                        {
+                            <div class="timeline-item @(Model.Etat >= aSPBrazilBurger.Models.Enums.EtatCommande.EnLivraison ? "active" : "")">
+                                <i class="bi bi-circle-fill"></i>
+                                <span>En livraison</span>
+                            </div>
+                        }
+                        <div class="timeline-item @(Model.Etat == aSPBrazilBurger.Models.Enums.EtatCommande.Terminee ? "active" : "")">
+                            <i class="bi bi-circle-fill"></i>
+                            <span>Terminée</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 20px;
+        color: #999;
+    }
+
+    .timeline-item i {
+        position: absolute;
+        left: -30px;
+        top: 0;
+        color: #ddd;
+    }
+
+    .timeline-item.active {
+        color: #198754;
+        font-weight: bold;
+    }
+
+    .timeline-item.active i {
+        color: #198754;
+    }
+
+    .timeline-item:not(:last-child):before {
+        content: '';
+        position: absolute;
+        left: -24px;
+        top: 15px;
+        width: 2px;
+        height: 100%;
+        background: #ddd;
+    }
+
+    .timeline-item.active:not(:last-child):before {
+        background: #198754;
+    }
+</style>

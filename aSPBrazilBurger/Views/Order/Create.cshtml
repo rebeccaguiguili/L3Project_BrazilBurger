@@ -1,0 +1,232 @@
+@model aSPBrazilBurger.Models.ViewModels.CreateOrderViewModel
+@{
+    ViewData["Title"] = "Nouvelle commande";
+    var complements = ViewBag.Complements as List<aSPBrazilBurger.Models.Entities.Complement> ?? new List<aSPBrazilBurger.Models.Entities.Complement>();
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="bi bi-cart-plus"></i> Nouvelle commande</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post" id="orderForm">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <input type="hidden" asp-for="ProduitId" />
+
+                <!-- Produit sélectionné -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Produit sélectionné</h5>
+                    </div>
+                    <div class="card-body">
+                        <h4>@Model.NomProduit</h4>
+                        <p class="text-success fs-5 mb-0">
+                            <strong>@Model.PrixProduit?.ToString("N0") FCFA</strong> l'unité
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quantité -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quantité</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group" style="max-width: 200px;">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decrementQuantity()">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            <input asp-for="Quantite" type="number" class="form-control text-center" min="1" max="100" id="quantiteInput" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Quantite" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Compléments -->
+                @if (complements.Any())
+                {
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Ajouter des compléments (optionnel)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                @for (int i = 0; i < complements.Count; i++)
+                                {
+                                    var complement = complements[i];
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input complement-checkbox"
+                                                   type="checkbox"
+                                                   name="ComplementIds"
+                                                   value="@complement.ProduitId"
+                                                   id="complement_@complement.ProduitId"
+                                                   data-prix="@complement.Produit.Prix">
+                                            <label class="form-check-label" for="complement_@complement.ProduitId">
+                                                <strong>@complement.Produit.Nom</strong>
+                                                <span class="badge bg-info">@complement.Type</span>
+                                                <br/>
+                                                <small class="text-success">+@complement.Produit.Prix.ToString("N0") FCFA</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Type de consommation -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Type de consommation</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check mb-2">
+                            <input asp-for="TypeConsommation" class="form-check-input" type="radio" value="0" id="surPlace" checked>
+                            <label class="form-check-label" for="surPlace">
+                                <i class="bi bi-shop"></i> <strong>Sur place</strong>
+                                <small class="text-muted d-block">Consommer au restaurant</small>
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-2">
+                            <input asp-for="TypeConsommation" class="form-check-input" type="radio" value="1" id="aEmporter">
+                            <label class="form-check-label" for="aEmporter">
+                                <i class="bi bi-bag"></i> <strong>À emporter</strong>
+                                <small class="text-muted d-block">Récupérer au restaurant</small>
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input asp-for="TypeConsommation" class="form-check-input" type="radio" value="2" id="livraison">
+                            <label class="form-check-label" for="livraison">
+                                <i class="bi bi-truck"></i> <strong>Livraison</strong>
+                                <small class="text-muted d-block">Livraison à domicile</small>
+                            </label>
+                        </div>
+
+                        <!-- Adresse de livraison (affichée si livraison sélectionnée) -->
+                        <div id="adresseDiv" style="display: none;">
+                            <label asp-for="AdresseLivraison" class="form-label"></label>
+                            <textarea asp-for="AdresseLivraison" class="form-control" rows="3" placeholder="Entrez votre adresse complète de livraison"></textarea>
+                            <span asp-validation-for="AdresseLivraison" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-credit-card"></i> Passer au paiement
+                    </button>
+                    <a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Récapitulatif -->
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Récapitulatif</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>@Model.NomProduit</span>
+                        <span id="prixProduit">@Model.PrixProduit?.ToString("N0") FCFA</span>
+                    </div>
+
+                    <div id="complementsList"></div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Quantité</span>
+                        <span id="quantiteDisplay">1</span>
+                    </div>
+
+                    <hr/>
+
+                    <div class="d-flex justify-content-between">
+                        <strong>TOTAL</strong>
+                        <strong class="text-success fs-4" id="totalPrice">@Model.PrixProduit?.ToString("N0") FCFA</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const prixUnitaire = @(Model.PrixProduit ?? 0);
+
+        function updateTotal() {
+            const quantite = parseInt(document.getElementById('quantiteInput').value) || 1;
+            document.getElementById('quantiteDisplay').textContent = quantite;
+
+            let total = prixUnitaire * quantite;
+
+            // Ajouter les compléments
+            const complementsChecked = document.querySelectorAll('.complement-checkbox:checked');
+            let complementsHTML = '';
+
+            complementsChecked.forEach(checkbox => {
+                const prix = parseFloat(checkbox.dataset.prix);
+                total += prix * quantite;
+                const label = document.querySelector(`label[for="${checkbox.id}"]`).querySelector('strong').textContent;
+                complementsHTML += `<div class="d-flex justify-content-between mb-1 small"><span>+ ${label}</span><span>${(prix * quantite).toFixed(0)} FCFA</span></div>`;
+            });
+
+            document.getElementById('complementsList').innerHTML = complementsHTML;
+            document.getElementById('totalPrice').textContent = total.toFixed(0) + ' FCFA';
+        }
+
+        function incrementQuantity() {
+            const input = document.getElementById('quantiteInput');
+            const currentValue = parseInt(input.value) || 1;
+            if (currentValue < 100) {
+                input.value = currentValue + 1;
+                updateTotal();
+            }
+        }
+
+        function decrementQuantity() {
+            const input = document.getElementById('quantiteInput');
+            const currentValue = parseInt(input.value) || 1;
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                updateTotal();
+            }
+        }
+
+        // Event listeners
+        document.getElementById('quantiteInput').addEventListener('input', updateTotal);
+
+        document.querySelectorAll('.complement-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateTotal);
+        });
+
+        // Afficher/masquer adresse livraison
+        document.querySelectorAll('input[name="TypeConsommation"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const adresseDiv = document.getElementById('adresseDiv');
+                if (this.value === '2') { // Livraison
+                    adresseDiv.style.display = 'block';
+                } else {
+                    adresseDiv.style.display = 'none';
+                }
+            });
+        });
+
+        // Initialize
+        updateTotal();
+    </script>
+}

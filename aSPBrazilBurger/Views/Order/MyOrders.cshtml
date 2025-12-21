@@ -1,0 +1,142 @@
+@model List<aSPBrazilBurger.Models.ViewModels.OrderSummaryViewModel>
+@{
+    ViewData["Title"] = "Mes commandes";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-list-ul"></i> Mes commandes</h2>
+        <a asp-controller="Catalog" asp-action="Index" class="btn btn-primary">
+            <i class="bi bi-cart-plus"></i> Nouvelle commande
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+            <h4 class="mt-3">Aucune commande</h4>
+            <p>Vous n'avez pas encore passé de commande.</p>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-primary mt-2">
+                <i class="bi bi-cart-plus"></i> Commander maintenant
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var commande in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><strong>Commande #@commande.CommandeId</strong></span>
+                            @{
+                                var badgeClass = commande.Etat switch
+                                {
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.EnAttente => "bg-warning",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.Validee => "bg-info",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.EnPreparation => "bg-primary",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.Pret => "bg-success",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.EnLivraison => "bg-dark",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.Terminee => "bg-success",
+                                    aSPBrazilBurger.Models.Enums.EtatCommande.Annulee => "bg-danger",
+                                    _ => "bg-secondary"
+                                };
+                            }
+                            <span class="badge @badgeClass">@commande.Etat</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar"></i> @commande.DateCommande.ToString("dd/MM/yyyy HH:mm")
+                                </small>
+                            </p>
+
+                            <div class="mb-2">
+                                @if (commande.TypeConsommation == aSPBrazilBurger.Models.Enums.TypeConsommation.SurPlace)
+                                {
+                                    <span class="badge bg-info"><i class="bi bi-shop"></i> Sur place</span>
+                                }
+                                else if (commande.TypeConsommation == aSPBrazilBurger.Models.Enums.TypeConsommation.AEmporter)
+                                {
+                                    <span class="badge bg-warning"><i class="bi bi-bag"></i> À emporter</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-dark"><i class="bi bi-truck"></i> Livraison</span>
+                                }
+
+                                @if (commande.EstPayee)
+                                {
+                                    <span class="badge bg-success"><i class="bi bi-check-circle"></i> Payée</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger"><i class="bi bi-x-circle"></i> Non payée</span>
+                                }
+                            </div>
+
+                            <p class="card-text">
+                                <i class="bi bi-box"></i> <strong>@commande.NombreProduits</strong> article(s)
+                            </p>
+
+                            <hr/>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong class="text-success fs-5">@commande.MontantTotal.ToString("N0") FCFA</strong>
+                                <a asp-action="Details" asp-route-id="@commande.CommandeId" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> Voir détails
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Statistiques -->
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card text-center bg-light">
+                    <div class="card-body">
+                        <h3 class="text-primary">@Model.Count</h3>
+                        <p class="mb-0">Commandes totales</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-light">
+                    <div class="card-body">
+                        <h3 class="text-success">@Model.Count(c => c.EstPayee)</h3>
+                        <p class="mb-0">Commandes payées</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-light">
+                    <div class="card-body">
+                        <h3 class="text-warning">@Model.Sum(c => c.MontantTotal).ToString("N0") FCFA</h3>
+                        <p class="mb-0">Montant total</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

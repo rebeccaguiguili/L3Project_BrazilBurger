@@ -1,0 +1,133 @@
+@model aSPBrazilBurger.Models.ViewModels.ProductDetailViewModel
+@{
+    ViewData["Title"] = Model.Nom;
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Catalogue</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Nom</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Image produit -->
+        <div class="col-md-5">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="img-fluid rounded shadow" alt="@Model.Nom">
+            }
+            else
+            {
+                <div class="bg-secondary rounded shadow d-flex align-items-center justify-content-center" style="height: 400px;">
+                    <i class="bi bi-image text-white" style="font-size: 5rem;"></i>
+                </div>
+            }
+        </div>
+
+        <!-- Informations produit -->
+        <div class="col-md-7">
+            <div class="mb-3">
+                @if (Model.TypeProduit == "Menu")
+                {
+                    <span class="badge bg-warning text-dark mb-2">MENU COMPLET</span>
+                }
+                else if (Model.TypeProduit == "Burger")
+                {
+                    <span class="badge bg-success mb-2">BURGER</span>
+                }
+                else
+                {
+                    <span class="badge bg-info mb-2">COMPLÉMENT</span>
+                }
+            </div>
+
+            <h1 class="display-5 mb-3">@Model.Nom</h1>
+
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <p class="lead text-muted">@Model.Description</p>
+            }
+
+            <!-- Composition du menu -->
+            @if (Model.TypeProduit == "Menu" && Model.Composition != null && Model.Composition.Any())
+            {
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="bi bi-list-check"></i> Composition du menu</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.Composition)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>@item.NomBurger</strong>
+                                        <br/>
+                                        <small class="text-muted">+ @item.NomComplement (@item.TypeComplement)</small>
+                                    </div>
+                                    <span class="badge bg-secondary rounded-pill">Inclus</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+            <!-- Prix -->
+            <div class="card mb-4 border-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Prix</h3>
+                        <h2 class="text-success mb-0">@Model.Prix.ToString("N0") FCFA</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-grid gap-2">
+                <a asp-controller="Order" asp-action="Create" asp-route-productId="@Model.ProduitId"
+                   class="btn btn-success btn-lg">
+                    <i class="bi bi-cart-plus"></i> Commander maintenant
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Retour au catalogue
+                </a>
+            </div>
+
+            <!-- Informations supplémentaires -->
+            <div class="mt-4">
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>Besoin d'aide ?</strong> Notre équipe est à votre disposition pour toute question.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section avantages -->
+    <div class="row mt-5 mb-5">
+        <div class="col-md-4 text-center">
+            <div class="mb-3">
+                <i class="bi bi-clock text-success" style="font-size: 2.5rem;"></i>
+            </div>
+            <h5>Préparation rapide</h5>
+            <p class="text-muted">Vos commandes préparées avec soin</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="mb-3">
+                <i class="bi bi-shield-check text-success" style="font-size: 2.5rem;"></i>
+            </div>
+            <h5>Qualité garantie</h5>
+            <p class="text-muted">Ingrédients frais et de qualité</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="mb-3">
+                <i class="bi bi-truck text-success" style="font-size: 2.5rem;"></i>
+            </div>
+            <h5>Livraison disponible</h5>
+            <p class="text-muted">Recevez votre commande chez vous</p>
+        </div>
+    </div>
+</div>

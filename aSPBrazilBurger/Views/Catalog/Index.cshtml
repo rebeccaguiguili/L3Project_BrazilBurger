@@ -1,0 +1,159 @@
+@model aSPBrazilBurger.Models.ViewModels.CatalogViewModel
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4">Notre Catalogue</h1>
+        <p class="lead text-muted">Découvrez nos délicieux burgers et menus</p>
+    </div>
+
+    <!-- Filtres -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group w-100" role="group" aria-label="Filtres catalogue">
+                <a asp-action="Index" asp-route-filter="tous"
+                   class="btn @(string.IsNullOrEmpty(Model.CurrentFilter) || Model.CurrentFilter == "tous" ? "btn-primary" : "btn-outline-primary")">
+                    Tous
+                </a>
+                <a asp-action="Index" asp-route-filter="burgers"
+                   class="btn @(Model.CurrentFilter == "burgers" ? "btn-primary" : "btn-outline-primary")">
+                    Burgers
+                </a>
+                <a asp-action="Index" asp-route-filter="menus"
+                   class="btn @(Model.CurrentFilter == "menus" ? "btn-primary" : "btn-outline-primary")">
+                    Menus
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Section Burgers -->
+    @if (Model.Burgers.Any())
+    {
+        <div class="mb-5">
+            <h2 class="mb-3">
+                <i class="bi bi-list"></i> Burgers
+            </h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var burger in Model.Burgers)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            @if (!string.IsNullOrEmpty(burger.Produit.ImageUrl))
+                            {
+                                <img src="@burger.Produit.ImageUrl" class="card-img-top" alt="@burger.Produit.Nom" style="height: 200px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="bi bi-image text-white" style="font-size: 3rem;"></i>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@burger.Produit.Nom</h5>
+                                @if (!string.IsNullOrEmpty(burger.Description))
+                                {
+                                    <p class="card-text text-muted small">@burger.Description</p>
+                                }
+                                <p class="card-text">
+                                    <strong class="text-success fs-5">@burger.Produit.Prix.ToString("N0") FCFA</strong>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <div class="d-grid gap-2">
+                                    <a asp-action="Details" asp-route-id="@burger.Produit.Id" class="btn btn-outline-primary">
+                                        <i class="bi bi-eye"></i> Voir détails
+                                    </a>
+                                    <a asp-controller="Order" asp-action="Create" asp-route-productId="@burger.Produit.Id" class="btn btn-success">
+                                        <i class="bi bi-cart-plus"></i> Commander
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Section Menus -->
+    @if (Model.Menus.Any())
+    {
+        <div class="mb-5">
+            <h2 class="mb-3">
+                <i class="bi bi-box"></i> Menus
+            </h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var menu in Model.Menus)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-warning">
+                            <div class="card-header bg-warning text-dark">
+                                <strong>MENU COMPLET</strong>
+                            </div>
+                            @if (!string.IsNullOrEmpty(menu.Produit.ImageUrl))
+                            {
+                                <img src="@menu.Produit.ImageUrl" class="card-img-top" alt="@menu.Produit.Nom" style="height: 200px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-warning d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="bi bi-basket text-dark" style="font-size: 3rem;"></i>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@menu.Produit.Nom</h5>
+                                @if (!string.IsNullOrEmpty(menu.Description))
+                                {
+                                    <p class="card-text text-muted small">@menu.Description</p>
+                                }
+                                @if (menu.Compositions.Any())
+                                {
+                                    <p class="card-text small">
+                                        <strong>Contient :</strong><br/>
+                                        @foreach (var comp in menu.Compositions.Take(3))
+                                        {
+                                            <span class="badge bg-secondary me-1">@comp.Burger.Produit.Nom</span>
+                                        }
+                                    </p>
+                                }
+                                <p class="card-text">
+                                    <strong class="text-warning fs-5">Prix calculé</strong>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <div class="d-grid gap-2">
+                                    <a asp-action="Details" asp-route-id="@menu.Produit.Id" class="btn btn-outline-warning">
+                                        <i class="bi bi-eye"></i> Voir détails
+                                    </a>
+                                    <a asp-controller="Order" asp-action="Create" asp-route-productId="@menu.Produit.Id" class="btn btn-warning">
+                                        <i class="bi bi-cart-plus"></i> Commander
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Message si aucun produit -->
+    @if (!Model.Burgers.Any() && !Model.Menus.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle"></i>
+            Aucun produit disponible pour le moment.
+        </div>
+    }
+</div>
