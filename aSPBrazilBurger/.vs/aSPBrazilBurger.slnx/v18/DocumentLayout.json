@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\",
+  "WorkspaceRootPath": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\dell\\desktop\\app dev\\web dev\\rebeccaproject\\l3project_brazilburger\\aspbrazilburger\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\dell\\desktop\\app dev\\web dev\\rebeccaproject\\l3project_brazilburger\\aspbrazilburger\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\cheikh seye\\documents\\l3project_brazilburger\\aspbrazilburger\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\dell\\desktop\\app dev\\web dev\\rebeccaproject\\l3project_brazilburger\\aspbrazilburger\\aspbrazilburger.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\cheikh seye\\documents\\l3project_brazilburger\\aspbrazilburger\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\cheikh seye\\documents\\l3project_brazilburger\\aspbrazilburger\\aspbrazilburger.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|solutionrelative:aspbrazilburger.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\dell\\desktop\\app dev\\web dev\\rebeccaproject\\l3project_brazilburger\\aspbrazilburger\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|c:\\users\\cheikh seye\\documents\\l3project_brazilburger\\aspbrazilburger\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A4E6756-7921-6960-3867-21E32E805B71}|aSPBrazilBurger.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,15 +26,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\Properties\\launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\Properties\\launchSettings.json",
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -43,23 +43,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\appsettings.json",
+              "ToolTip": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-12-21T18:38:07.482Z"
+              "WhenOpened": "2025-12-21T18:38:07.482Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\Program.cs",
+              "ToolTip": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\Program.cs",
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -69,9 +70,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "aSPBrazilBurger.csproj",
-              "DocumentMoniker": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\aSPBrazilBurger.csproj",
+              "DocumentMoniker": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\aSPBrazilBurger.csproj",
               "RelativeDocumentMoniker": "aSPBrazilBurger.csproj",
-              "ToolTip": "C:\\Users\\DELL\\Desktop\\App Dev\\Web Dev\\RebeccaProject\\L3Project_BrazilBurger\\aSPBrazilBurger\\aSPBrazilBurger.csproj",
+              "ToolTip": "C:\\Users\\CHEIKH SEYE\\Documents\\L3Project_BrazilBurger\\aSPBrazilBurger\\aSPBrazilBurger.csproj",
               "RelativeToolTip": "aSPBrazilBurger.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
