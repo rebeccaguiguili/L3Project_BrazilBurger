@@ -1,0 +1,75 @@
+# ============================================
+# .dockerignore pour aSPBrazilBurger
+# Optimise le build Docker en excluant les fichiers inutiles
+# ============================================
+
+# Répertoires de build et binaires
+bin/
+obj/
+publish/
+out/
+
+# Fichiers de cache et temporaires
+**/.vs/
+**/.vscode/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+
+# Fichiers de configuration IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Fichiers de base de données locaux
+*.db
+*.sqlite
+*.sqlite3
+
+# Fichiers Node.js (si présents)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Fichiers de test
+TestResults/
+*.trx
+*.coverage
+
+# Fichiers de documentation
+*.md
+!README.md
+LICENSE
+CHANGELOG.md
+
+# Fichiers Git
+.git/
+.gitignore
+.gitattributes
+
+# Fichiers Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Fichiers de migration/scripts
+*.sql
+*.py
+
+# Images et médias de développement (si non nécessaires en production)
+**/images/
+*.zip
+
+# Fichiers de configuration sensibles (déjà en variables d'environnement)
+appsettings.Development.json
+
+# Fichiers temporaires Windows/Linux/Mac
+Thumbs.db
+.DS_Store
+*.bak
+*.old

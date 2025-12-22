@@ -1,0 +1,101 @@
+# ============================================
+# Docker Compose pour développement local
+# Permet de tester l'application en environnement similaire à production
+# ============================================
+
+version: '3.8'
+
+services:
+  # Application web ASP.NET Core
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: brazilburger-web
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - PORT=8080
+      - DATABASE_URL=Host=db;Database=brazilburger;Username=postgres;Password=postgres;SSL Mode=Prefer
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - brazilburger-network
+    restart: unless-stopped
+
+  # Base de données PostgreSQL locale (pour tests)
+  db:
+    image: postgres:16-alpine
+    container_name: brazilburger-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=brazilburger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - brazilburger-network
+    restart: unless-stopped
+
+  # PgAdmin (optionnel - interface graphique pour PostgreSQL)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: brazilburger-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@brazilburger.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=80
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - brazilburger-network
+    restart: unless-stopped
+
+networks:
+  brazilburger-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
+
+# ============================================
+# Utilisation:
+# ============================================
+#
+# Démarrer tous les services:
+#   docker-compose up -d
+#
+# Voir les logs:
+#   docker-compose logs -f
+#
+# Arrêter tous les services:
+#   docker-compose down
+#
+# Arrêter et supprimer les volumes:
+#   docker-compose down -v
+#
+# Rebuild l'application:
+#   docker-compose up -d --build
+#
+# Accès:
+#   - Application: http://localhost:8080
+#   - PgAdmin: http://localhost:5050
+#     Email: admin@brazilburger.com
+#     Password: admin
+#
+# ============================================

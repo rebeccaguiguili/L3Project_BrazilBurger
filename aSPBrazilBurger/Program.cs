@@ -4,9 +4,20 @@ using aSPBrazilBurger.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuration du port pour Render.com
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(int.Parse(port));
+});
+
 // Configuration de la base de données PostgreSQL
+// Support des variables d'environnement pour Render.com
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 // Configuration de l'authentification par cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -46,7 +57,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// HTTPS Redirection désactivée sur Render (Render gère le SSL en amont)
+// En développement local, décommenter la ligne suivante si nécessaire
+// app.UseHttpsRedirection();
 app.UseRouting();
 
 // Activation des sessions

@@ -1,0 +1,64 @@
+# ============================================
+# Render Infrastructure as Code Configuration
+# Pour déploiement automatisé de BrazilBurger
+# ============================================
+
+services:
+  # Service principal - Application Web ASP.NET Core
+  - type: web
+    name: brazilburger-app
+    runtime: docker
+    region: oregon # Changez selon votre région préférée
+    plan: free # Options: free, starter, standard, pro
+    branch: csharp # Branche Git à déployer
+    rootDir: aSPBrazilBurger
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+
+    # Configuration du déploiement
+    autoDeploy: true # Déploiement automatique à chaque push
+
+    # Health check
+    healthCheckPath: /
+
+    # Variables d'environnement
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+      - key: DOTNET_RUNNING_IN_CONTAINER
+        value: true
+
+      - key: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
+        value: false
+
+      # Connection à la base de données (à configurer manuellement ou via fromDatabase)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: brazilburger-db
+          property: connectionString
+
+      # Logging
+      - key: Logging__LogLevel__Default
+        value: Information
+
+      - key: Logging__LogLevel__Microsoft.AspNetCore
+        value: Warning
+
+      - key: AllowedHosts
+        value: "*"
+
+# Base de données PostgreSQL (optionnel - décommentez si vous voulez créer la BDD sur Render)
+# databases:
+#   - name: brazilburger-db
+#     databaseName: brazilburger
+#     user: brazilburger_user
+#     region: oregon # Même région que le service web
+#     plan: free # Options: free, starter, standard, pro
+#     ipAllowList: [] # Vide = accès public (avec credentials)
+
+# Note: Si vous utilisez Neon.tech pour la BDD, commentez la section databases ci-dessus
+# et configurez DATABASE_URL manuellement dans le dashboard Render
