@@ -3,138 +3,174 @@
 }
 
 <!-- Hero Section -->
-<div class="hero-section text-center text-white py-5 mb-5" style="background: linear-gradient(135deg, #198754 0%, #0d6efd 100%); border-radius: 15px;">
-    <div class="container">
-        <h1 class="display-3 fw-bold mb-3">
-            <i class="bi bi-shop"></i> Brasil Burger
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge">
+            <i class="fas fa-fire"></i>
+            100% Grillé au Feu de Bois
+        </div>
+        <h1>
+            BRASIL<br />
+            <span>BURGER</span>
         </h1>
-        <p class="lead mb-4">Les meilleurs burgers de Dakar, préparés avec passion</p>
-        <div class="d-inline-flex gap-3">
-            <a asp-controller="Catalog" asp-action="Index" class="btn btn-warning btn-lg">
-                <i class="bi bi-list"></i> Voir le catalogue
-            </a>
-            @if (User.Identity?.IsAuthenticated != true)
+        <p>
+            Découvrez nos burgers artisanaux grillés à la perfection. Viande
+            fraîche, ingrédients locaux, saveurs authentiques.
+        </p>
+        <div class="hero-buttons">
+            @if (User.Identity?.IsAuthenticated == true)
             {
-                <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">
-                    <i class="bi bi-person-plus"></i> Créer un compte
+                <a asp-controller="Catalog" asp-action="Index" class="btn-primary">
+                    <i class="fas fa-shopping-bag"></i>
+                    Commander maintenant
                 </a>
             }
+            else
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Créer un compte
+                </a>
+            }
+            <a asp-controller="Catalog" asp-action="Index" class="btn-secondary">Voir le menu</a>
+        </div>
+        <div class="hero-tags">
+            <span class="tag"><i class="fas fa-clock"></i> Livraison 30 min</span>
+            <span class="tag"><i class="fas fa-star"></i> Demi & entières</span>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Avantages -->
-<div class="row mb-5">
-    <div class="col-md-4 text-center mb-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="bi bi-lightning-charge text-warning" style="font-size: 3rem;"></i>
-                </div>
-                <h4>Livraison rapide</h4>
-                <p class="text-muted">Recevez votre commande en un temps record partout à Dakar</p>
+<!-- Why Choose Us Section -->
+<section class="why-section">
+    <div class="section-title">
+        <h2>POURQUOI <span>NOUS</span> CHOISIR</h2>
+    </div>
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">
+                <i class="fas fa-leaf"></i>
             </div>
+            <h4>Ingrédients Frais</h4>
+            <p>
+                Viande 100% bœuf, légumes locaux et pain artisanal cuit chaque jour.
+            </p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <i class="fas fa-fire-alt"></i>
+            </div>
+            <h4>Préparation Rapide</h4>
+            <p>
+                Votre commande prête en moins de 15 minutes tout en conservant la
+                qualité.
+            </p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <i class="fas fa-motorcycle"></i>
+            </div>
+            <h4>Livraison Express</h4>
+            <p>Livraison dans tout Dakar en 30 minutes maximum.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            <h4>Paiement Facile</h4>
+            <p>Payez facilement par Wave ou Orange Money également en espèces.</p>
         </div>
     </div>
-
-    <div class="col-md-4 text-center mb-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="bi bi-award text-success" style="font-size: 3rem;"></i>
-                </div>
-                <h4>Qualité garantie</h4>
-                <p class="text-muted">Ingrédients frais et de première qualité pour des burgers exceptionnels</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 text-center mb-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="bi bi-credit-card text-primary" style="font-size: 3rem;"></i>
-                </div>
-                <h4>Paiement facile</h4>
-                <p class="text-muted">Wave, Orange Money ou espèces - vous choisissez !</p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
 <!-- Comment ça marche -->
-<div class="mb-5">
-    <h2 class="text-center mb-4">Comment commander ?</h2>
-    <div class="row">
-        <div class="col-md-3 text-center mb-4">
-            <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+<section style="padding: 80px 50px; background-color: var(--white);">
+    <div class="section-title">
+        <h2>COMMENT <span>COMMANDER</span> ?</h2>
+        <p>Quatre étapes simples pour savourer nos délicieux burgers</p>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-3 mb-4">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 80px; height: 80px; background-color: var(--primary-red); color: var(--white);">
                 <h2 class="mb-0">1</h2>
             </div>
-            <h5>Parcourez le catalogue</h5>
-            <p class="text-muted">Découvrez nos burgers et menus</p>
+            <h5 style="color: var(--dark-brown); font-weight: 600; margin-bottom: 10px;">Parcourez le catalogue</h5>
+            <p style="color: var(--text-light); font-size: 14px;">Découvrez nos burgers et menus</p>
         </div>
 
-        <div class="col-md-3 text-center mb-4">
-            <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+        <div class="col-md-3 mb-4">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 80px; height: 80px; background-color: var(--primary-red); color: var(--white);">
                 <h2 class="mb-0">2</h2>
             </div>
-            <h5>Personnalisez</h5>
-            <p class="text-muted">Ajoutez des compléments à votre goût</p>
+            <h5 style="color: var(--dark-brown); font-weight: 600; margin-bottom: 10px;">Personnalisez</h5>
+            <p style="color: var(--text-light); font-size: 14px;">Choisissez votre portion et extras</p>
         </div>
 
-        <div class="col-md-3 text-center mb-4">
-            <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+        <div class="col-md-3 mb-4">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 80px; height: 80px; background-color: var(--primary-red); color: var(--white);">
                 <h2 class="mb-0">3</h2>
             </div>
-            <h5>Payez en ligne</h5>
-            <p class="text-muted">Choisissez votre mode de paiement</p>
+            <h5 style="color: var(--dark-brown); font-weight: 600; margin-bottom: 10px;">Payez en ligne</h5>
+            <p style="color: var(--text-light); font-size: 14px;">Wave, Orange Money ou espèces</p>
         </div>
 
-        <div class="col-md-3 text-center mb-4">
-            <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+        <div class="col-md-3 mb-4">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 80px; height: 80px; background-color: var(--primary-red); color: var(--white);">
                 <h2 class="mb-0">4</h2>
             </div>
-            <h5>Dégustez !</h5>
-            <p class="text-muted">Recevez et savourez votre commande</p>
+            <h5 style="color: var(--dark-brown); font-weight: 600; margin-bottom: 10px;">Dégustez !</h5>
+            <p style="color: var(--text-light); font-size: 14px;">Recevez et savourez votre commande</p>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Call to action -->
-<div class="text-center bg-light p-5 rounded mb-5">
-    <h2 class="mb-3">Prêt à commander ?</h2>
-    <p class="lead mb-4">Rejoignez des milliers de clients satisfaits</p>
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <a asp-controller="Catalog" asp-action="Index" class="btn btn-success btn-lg">
-            <i class="bi bi-cart-plus"></i> Commander maintenant
-        </a>
-    }
-    else
-    {
-        <div class="d-inline-flex gap-3">
-            <a asp-controller="Account" asp-action="Register" class="btn btn-success btn-lg">
-                <i class="bi bi-person-plus"></i> Créer un compte
+<!-- Call to Action -->
+<section style="padding: 80px 50px; background-color: var(--cream);">
+    <div class="text-center">
+        <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--dark-brown); margin-bottom: 15px;">
+            PRÊT À COMMANDER ?
+        </h2>
+        <p style="color: var(--text-light); font-size: 16px; margin-bottom: 30px;">
+            Rejoignez des milliers de clients satisfaits
+        </p>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a asp-controller="Catalog" asp-action="Index" class="btn-primary" style="font-size: 16px; padding: 16px 32px;">
+                <i class="fas fa-cart-plus"></i> Commander maintenant
             </a>
-            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-success btn-lg">
-                <i class="bi bi-box-arrow-in-right"></i> Se connecter
-            </a>
-        </div>
-    }
-</div>
+        }
+        else
+        {
+            <div class="d-inline-flex gap-3">
+                <a asp-controller="Account" asp-action="Register" class="btn-primary" style="font-size: 16px; padding: 16px 32px;">
+                    <i class="fas fa-user-plus"></i> Créer un compte
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="btn-secondary" style="font-size: 16px; padding: 16px 32px;">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </a>
+            </div>
+        }
+    </div>
+</section>
 
 <!-- Statistiques -->
-<div class="row text-center mb-5">
-    <div class="col-md-4 mb-3">
-        <h2 class="text-success display-4">500+</h2>
-        <p class="text-muted">Clients satisfaits</p>
+<section style="padding: 80px 50px; background-color: var(--white);">
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--primary-red); margin-bottom: 10px;">500+</h2>
+            <p style="color: var(--text-light); font-size: 14px;">Clients satisfaits</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--primary-red); margin-bottom: 10px;">1000+</h2>
+            <p style="color: var(--text-light); font-size: 14px;">Commandes livrées</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--primary-red); margin-bottom: 10px;">4.8/5</h2>
+            <p style="color: var(--text-light); font-size: 14px;">Note moyenne</p>
+        </div>
     </div>
-    <div class="col-md-4 mb-3">
-        <h2 class="text-success display-4">1000+</h2>
-        <p class="text-muted">Commandes livrées</p>
-    </div>
-    <div class="col-md-4 mb-3">
-        <h2 class="text-success display-4">4.8/5</h2>
-        <p class="text-muted">Note moyenne</p>
-    </div>
-</div>
+</section>
